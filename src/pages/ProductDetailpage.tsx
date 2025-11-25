@@ -1,0 +1,37 @@
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+interface Data {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: object;
+}
+const ProductDetailpage = () => {
+  const [product, setProduct] = useState([] as Data);
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetch(`https://fakestoreapi.com/products/${id}`)
+      .then((response) => response.json())
+      .then((data) => setProduct(data));
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h2>{product.title}</h2>
+      <img src={product.image} alt={product.title} />
+      <p>{product.description}</p>
+      <p>Price: ${product.price}</p>
+    </div>
+  );
+};
+
+export default ProductDetailpage;
