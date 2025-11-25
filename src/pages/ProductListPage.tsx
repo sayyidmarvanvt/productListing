@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
+import ProductCard from "../components/ProductCard";
 
-interface Data {
+export interface Data {
   id: number;
   title: string;
   price: number;
@@ -16,7 +17,7 @@ function ProductListPage() {
   const [searchField, setSearchField] = useState("");
   const [selectedOption, setSelectedOption] = useState<string>("low to high");
 
-  const navigate = useNavigate();
+ 
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchField(event.target.value.toLowerCase());
@@ -44,13 +45,19 @@ function ProductListPage() {
 
   return (
     <>
-      <input type="search" placeholder="search" onChange={onSearchChange} />
+      {/* <input type="search" placeholder="search" onChange={onSearchChange} />
       <select value={selectedOption} onChange={handleOptionChange}>
         <option value="low to high">Low to High</option>
         <option value="high to low">High to Low</option>
-      </select>
+      </select> */}
 
-      <div className="container">
+      <SearchBar
+        handleOptionChange={handleOptionChange}
+        selectedOption={selectedOption}
+        onSearchChange={onSearchChange}
+      />
+
+      {/* <div className="container">
         {filteredData.map((item) => (
           <div className="card" key={item.id}>
             <img src={item.image} alt={item.title} className="card-img" />
@@ -61,7 +68,9 @@ function ProductListPage() {
             </button>
           </div>
         ))}
-      </div>
+      </div> */}
+
+      <ProductCard  filteredData={filteredData}/>
     </>
   );
 }
